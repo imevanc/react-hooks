@@ -3,15 +3,18 @@ import { createRoot } from 'react-dom/client'
 import { generateGradient, getMatchingPosts } from '#shared/blog-posts'
 
 // 🐨 make a function here called getQueryParam
+const getQueryParam = () => {
+	const params = new URLSearchParams(window.location.search)
+	return params.get('query') ?? ''
+}
 
 function App() {
 	// 🐨 move 👇 up to getQueryParam
-	const params = new URLSearchParams(window.location.search)
-	const initialQuery = params.get('query') ?? ''
+
 	// 🐨 move 👆 up to getQueryParam and return the initialQuery
 
 	// 🐨 pass getQueryParam into useState
-	const [query, setQuery] = useState(initialQuery)
+	const [query, setQuery] = useState(getQueryParam())
 	const words = query.split(' ')
 
 	const dogChecked = words.includes('dog')
@@ -19,7 +22,7 @@ function App() {
 	const caterpillarChecked = words.includes('caterpillar')
 
 	function handleCheck(tag: string, checked: boolean) {
-		const newWords = checked ? [...words, tag] : words.filter(w => w !== tag)
+		const newWords = checked ? [...words, tag] : words.filter((w) => w !== tag)
 		setQuery(newWords.filter(Boolean).join(' ').trim())
 	}
 
@@ -33,7 +36,7 @@ function App() {
 						name="query"
 						type="search"
 						value={query}
-						onChange={e => setQuery(e.currentTarget.value)}
+						onChange={(e) => setQuery(e.currentTarget.value)}
 					/>
 				</div>
 				<div>
@@ -41,7 +44,7 @@ function App() {
 						<input
 							type="checkbox"
 							checked={dogChecked}
-							onChange={e => handleCheck('dog', e.currentTarget.checked)}
+							onChange={(e) => handleCheck('dog', e.currentTarget.checked)}
 						/>{' '}
 						🐶 dog
 					</label>
@@ -49,7 +52,7 @@ function App() {
 						<input
 							type="checkbox"
 							checked={catChecked}
-							onChange={e => handleCheck('cat', e.currentTarget.checked)}
+							onChange={(e) => handleCheck('cat', e.currentTarget.checked)}
 						/>{' '}
 						🐱 cat
 					</label>
@@ -57,7 +60,7 @@ function App() {
 						<input
 							type="checkbox"
 							checked={caterpillarChecked}
-							onChange={e =>
+							onChange={(e) =>
 								handleCheck('caterpillar', e.currentTarget.checked)
 							}
 						/>{' '}
@@ -76,7 +79,7 @@ function MatchingPosts({ query }: { query: string }) {
 
 	return (
 		<ul className="post-list">
-			{matchingPosts.map(post => (
+			{matchingPosts.map((post) => (
 				<li key={post.id}>
 					<div
 						className="post-image"
@@ -84,7 +87,7 @@ function MatchingPosts({ query }: { query: string }) {
 					/>
 					<a
 						href={post.id}
-						onClick={event => {
+						onClick={(event) => {
 							event.preventDefault()
 							alert(`Great! Let's go to ${post.id}!`)
 						}}

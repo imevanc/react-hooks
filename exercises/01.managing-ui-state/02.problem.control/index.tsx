@@ -7,6 +7,11 @@ function App() {
 
 	// 🐨 make a function called handleCheck that accepts a "tag" string and a "checked" boolean
 	// 🐨 By calling setQuery, add the tag to the query if checked and remove it if not
+	const handleCheck = (tag: string, checked: boolean) => {
+		const words = query.split(' ')
+		const newWords = checked ? [...words, tag] : words.filter(w => w !== tag)
+		setQuery(newWords.filter(Boolean).join(' ').trim())
+	}
 
 	return (
 		<div className="app">
@@ -18,6 +23,7 @@ function App() {
 						name="query"
 						type="search"
 						// 🐨 set the value prop to query
+						value={query}
 						onChange={e => setQuery(e.currentTarget.value)}
 					/>
 				</div>
@@ -26,6 +32,7 @@ function App() {
 						<input
 							type="checkbox"
 							// 🐨 add an onChange to call handleCheck with dog and event.currentTarget.checked
+							onChange={e => handleCheck('dog', e.currentTarget.checked)}
 						/>{' '}
 						🐶 dog
 					</label>
@@ -33,6 +40,7 @@ function App() {
 						<input
 							type="checkbox"
 							// 🐨 add an onChange to call handleCheck with cat and event.currentTarget.checked
+							onChange={e => handleCheck('cat', e.currentTarget.checked)}
 						/>{' '}
 						🐱 cat
 					</label>
@@ -40,6 +48,9 @@ function App() {
 						<input
 							type="checkbox"
 							// 🐨 add an onChange to call handleCheck with caterpillar and event.currentTarget.checked
+							onChange={e =>
+								handleCheck('caterpillar', e.currentTarget.checked)
+							}
 						/>{' '}
 						🐛 caterpillar
 					</label>
