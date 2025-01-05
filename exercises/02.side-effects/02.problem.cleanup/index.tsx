@@ -31,6 +31,11 @@ function App() {
 			console.log('popstate event listener called')
 			setQuery(getQueryParam())
 		})
+		return () => 
+			window.removeEventListener('popstate', () => {
+				console.log('popstate event listener removed')
+			})
+
 		// 🐨 return a function which removes the popstate event listener
 		// 📜 https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener
 	}, [])
